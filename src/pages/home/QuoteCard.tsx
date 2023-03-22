@@ -1,14 +1,14 @@
-import { useFragment } from 'react-relay';
-import { graphql } from 'babel-plugin-relay/macro';
-import { Quote } from '../../types/Quote';
-import Card from 'react-bootstrap/Card';
+import { useFragment } from "react-relay";
+import { graphql } from "babel-plugin-relay/macro";
+import Card from "react-bootstrap/Card";
+import { QuoteCard_quote$key } from "./__generated__/QuoteCard_quote.graphql";
 
 interface Props {
-  quote: Quote;
+  quote: QuoteCard_quote$key;
 }
 
 const QuoteCard = (props: Props) => {
-  const quote = useFragment<any>(
+  const quote = useFragment(
     graphql`
       fragment QuoteCard_quote on Quote {
         _id
@@ -18,7 +18,8 @@ const QuoteCard = (props: Props) => {
           firstName
           lastName
         }
-      }`,
+      }
+    `,
     props.quote
   );
 
@@ -28,12 +29,12 @@ const QuoteCard = (props: Props) => {
         <blockquote className="blockquote mb-0">
           <p>{quote.text}</p>
           <footer className="blockquote-footer">
-            <cite title="Source Title">{`${quote.author.firstName} ${quote.author.lastName}`}</cite>
+            <cite title="Source Title">{`${quote?.author?.firstName} ${quote?.author?.lastName}`}</cite>
           </footer>
         </blockquote>
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default QuoteCard;
